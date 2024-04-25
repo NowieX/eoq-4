@@ -1,8 +1,7 @@
 import time
-import blessed.terminal
 import serial
-import blessed
 import serial.tools.list_ports
+from simple_board_printer import board_printer
 
 from Python.WaterRowerConnection import WaterRowerConnection
 
@@ -23,8 +22,7 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
         while self.connection:
-            terminal = blessed.Terminal()
-            print(terminal.home + terminal.normal + terminal.clear, end=" ")
+            board_printer()
 
             print("Do awesome stuff here! Total pulses:", self.pulses)
             self.connection.requestStatistic("total_kcal")
