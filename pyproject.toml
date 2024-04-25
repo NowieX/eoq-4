@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "waterrower-ad"
+version = "0.1.0"
+description = ""
+authors = ["Erwin de Vries <esdevries313@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pyserial = "^3.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

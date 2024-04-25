@@ -2,7 +2,7 @@ import time
 import serial
 import serial.tools.list_ports
 
-from WaterRowerConnection import WaterRowerConnection
+from Python.WaterRowerConnection import WaterRowerConnection
 
 
 class Example:
