@@ -22,11 +22,12 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
         while self.connection:
-            board_printer()
+            # board_printer()
 
             print("Do awesome stuff here! Total pulses:", self.pulses)
             self.connection.requestStatistic("total_kcal")
-            time.sleep(0.05)
+            # time.sleep(0.05)
+            time.sleep(1)
 
     def onEvent(self, event):
         """Called when any data comes."""
