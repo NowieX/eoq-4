@@ -1,6 +1,7 @@
 import time
+import blessed.terminal
 import serial
-import tkinter
+import blessed
 import serial.tools.list_ports
 
 from Python.WaterRowerConnection import WaterRowerConnection
@@ -11,15 +12,9 @@ class Example:
         self.port = None
         self.connection = None
         self.pulses = 0
-        self.window = tkinter.Tk()
 
     def onDisconnect(self):
         self.connection = None
-
-    def handle_gui(self):
-        self.window.title("App")
-        self.window.after(1000, self.run)
-        self.window.mainloop()
 
     def run(self):
         # Start monitoring in the background, calling onEvent when data comes in.
@@ -28,10 +23,12 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
         while self.connection:
+            terminal = blessed.Terminal()
+            print(terminal.home + terminal.normal + terminal.clear, end=" ")
+
             print("Do awesome stuff here! Total pulses:", self.pulses)
-            self.connection.requestStatistic("total_distance_m")
-            self.window.after(1000,self.run)
-            time.sleep(1)
+            self.connection.requestStatistic("total_kcal")
+            time.sleep(0.05)
 
     def onEvent(self, event):
         """Called when any data comes."""
@@ -63,4 +60,4 @@ class Example:
             time.sleep(1)
 
 
-Example().handle_gui()
+Example().run()
