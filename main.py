@@ -6,7 +6,6 @@ import serial.tools.list_ports
 from Python.WaterRowerConnection import WaterRowerConnection
 
 
-
 class Example:
     def __init__(self):
         self.port = None
@@ -19,7 +18,7 @@ class Example:
 
     def handle_gui(self):
         self.window.title("App")
-        self.window.after(1000,self.run)
+        self.window.after(1000, self.run)
         self.window.mainloop()
 
     def run(self):
