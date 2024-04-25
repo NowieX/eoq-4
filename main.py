@@ -1,8 +1,10 @@
 import time
 import serial
+import tkinter
 import serial.tools.list_ports
 
 from Python.WaterRowerConnection import WaterRowerConnection
+
 
 
 class Example:
@@ -10,6 +12,7 @@ class Example:
         self.port = None
         self.connection = None
         self.pulses = 0
+        self.window = tkinter.Tk()
 
     def onDisconnect(self):
         self.connection = None
@@ -21,6 +24,7 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
         while self.connection:
+            self.window.mainloop()
             print("Do awesome stuff here! Total pulses:", self.pulses)
             self.connection.requestStatistic("total_distance_m")
             time.sleep(1)
