@@ -140,7 +140,7 @@ class WaterRowerConnection:
             time.sleep(0.1)  # time for capture and request loops to stop running
             self._serial.close()
 
-    def requestAddress(self, address):
+    def requestAddress(self, address: str):
         size = MEMORY_MAP[address]['size']
         cmd = SIZE_MAP[size]
         self.write(cmd + address)
@@ -203,7 +203,7 @@ class WaterRowerConnection:
                  :4] == PING_RESPONSE:  # if Ping response is recived which is all the time the rower is in standstill
                 return self.buildEvent(type='ping', raw=cmd)  # do nothing
             elif cmd[:1] == PULSE_COUNT_RESPONSE:  # Pulse count the amount of 25 teeth passed 25teeth passed = P1
-                return self.buildEvent(type='pulse', raw=cmd)  # do nothing
+                return self.buildEvent(type='pulse', raw=cmd, value=int(cmd[1:], 16))  # do nothing
             elif cmd == ERROR_RESPONSE:  # If WaterRower response with an error
                 return self.buildEvent(type='error',
                                        raw=cmd)  # crate an event with the dict entry error and the raw command
@@ -231,3 +231,20 @@ class WaterRowerConnection:
                 return self.buildEvent(memory['type'], int(value, base=memory['base']), cmd)
         else:
             print('WaterRower - cannot read reply for %s', cmd)
+
+    def requestStatistic(self, name):
+        """Request a certain statistic from the monitor. It will be reported through onEvent at some later time.
+
+        Args:
+            name (str): Can be one of: total_distance_m total_strokes watts total_kcal avg_distance_cmps
+            total_speed_cmps display_sec_dec display_sec display_min display_hr heart_rate stroke_rate
+            avg_time_stroke_whole avg_time_stroke_pull tank_volume
+
+        Raises:
+            NameError: Invalid statistic.
+        """
+        for address, entry in MEMORY_MAP.items():
+            if entry['type'] == name:
+                self.requestAddress(address)
+                return
+        raise NameError(f"No such statistic '{name}'")
