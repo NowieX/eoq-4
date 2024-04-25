@@ -17,6 +17,11 @@ class Example:
     def onDisconnect(self):
         self.connection = None
 
+    def handle_gui(self):
+        self.window.title("App")
+        self.window.after(1000,self.run)
+        self.window.mainloop()
+
     def run(self):
         # Start monitoring in the background, calling onEvent when data comes in.
         self.connect()
@@ -24,9 +29,9 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
         while self.connection:
-            self.window.mainloop()
             print("Do awesome stuff here! Total pulses:", self.pulses)
             self.connection.requestStatistic("total_distance_m")
+            self.window.after(1000,self.run)
             time.sleep(1)
 
     def onEvent(self, event):
@@ -59,4 +64,4 @@ class Example:
             time.sleep(1)
 
 
-Example().run()
+Example().handle_gui()
