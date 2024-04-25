@@ -2,7 +2,6 @@ import time
 import serial
 import serial.tools.list_ports
 from simple_board_printer import board_printer
-from calc_kcals import calc_calories
 
 from Python.WaterRowerConnection import WaterRowerConnection
 
@@ -12,6 +11,8 @@ class Example:
         self.port = None
         self.connection = None
         self.pulses = 0
+        self.npc_walk_position = 0
+        self.npc_run_position = 0
 
     def onDisconnect(self):
         self.connection = None
@@ -23,19 +24,23 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
         while self.connection:
-            # board_printer()
+            self.npc_walk_position += 1
+            self.npc_run_position += 2
+            board_printer(self.npc_walk_position, self.npc_run_position)
 
-            print("Do awesome stuff here! Total pulses:", self.pulses)
-            event = self.connection.requestStatistic("total_kcal")
-            calc_calories(event)
+            # print("Do awesome stuff here! Total pulses:", self.pulses)
+            # self.connection.requestStatistic("total_kcal")
+            #calc_calories(self.pulses)
             # time.sleep(0.05)
-            time.sleep(1)
+            time.sleep(0.01)
+            
 
     def onEvent(self, event):
         """Called when any data comes."""
-        print('event', event, flush=True)
+        # print('event', event, flush=True)
         if event["type"] == "pulse":
             self.pulses += event["value"]
+            # pass
 
     def connect(self):
         """This will start a thread in the background, that will call the onEvent method whenever data comes in."""
