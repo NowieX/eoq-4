@@ -2,6 +2,7 @@ import time
 import serial
 import serial.tools.list_ports
 from simple_board_printer import board_printer
+from calc_kcals import calc_calories
 
 from Python.WaterRowerConnection import WaterRowerConnection
 
@@ -25,7 +26,8 @@ class Example:
             # board_printer()
 
             print("Do awesome stuff here! Total pulses:", self.pulses)
-            self.connection.requestStatistic("total_kcal")
+            event = self.connection.requestStatistic("total_kcal")
+            calc_calories(event)
             # time.sleep(0.05)
             time.sleep(1)
 
