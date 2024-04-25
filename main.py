@@ -6,7 +6,6 @@ from Python.WaterRowerConnection import WaterRowerConnection
 
 
 class Example:
-
     def __init__(self):
         self.port = None
         self.connection = None
