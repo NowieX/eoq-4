@@ -1,6 +1,7 @@
 import time
 import serial
 import serial.tools.list_ports
+import random
 from simple_board_printer import board_printer
 from Python.WaterRowerConnection import WaterRowerConnection
 
@@ -11,8 +12,7 @@ class Example:
         self.port = None
         self.connection = None
         self.pulses = 0
-        self.npc_walk_position = 0
-        self.npc_run_position = 0
+        self.player_run_speed = 0
 
     def onDisconnect(self):
         self.connection = None
@@ -30,8 +30,8 @@ class Example:
                 speed_value = self.all_events[-1].get('value')
                 speed_value = 0 if speed_value is None else speed_value // 100
 
-                self.npc_walk_position += speed_value
-            board_printer(self.npc_walk_position)
+                self.player_run_speed += random.randint(0, 5)
+            board_printer(self.player_run_speed)
 
             # calc_calories(self.pulses)
             time.sleep(1)
