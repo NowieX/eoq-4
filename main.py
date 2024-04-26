@@ -2,7 +2,6 @@ import time
 import serial
 import serial.tools.list_ports
 from simple_board_printer import board_printer
-
 from Python.WaterRowerConnection import WaterRowerConnection
 
 
@@ -24,20 +23,20 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
         while self.connection:
-            self.npc_walk_position += 1
-            self.npc_run_position += 2
+            self.npc_walk_position += round(1.3)
+            self.npc_run_position += round(1.3)
             board_printer(self.npc_walk_position, self.npc_run_position)
 
-            # print("Do awesome stuff here! Total pulses:", self.pulses)
-            # self.connection.requestStatistic("total_kcal")
-            #calc_calories(self.pulses)
+            print("Do awesome stuff here! Total pulses:", self.pulses)
+            self.connection.requestStatistic("total_kcal")
+
+            # calc_calories(self.pulses)
             # time.sleep(0.05)
-            time.sleep(0.01)
-            
+            time.sleep(1)
 
     def onEvent(self, event):
         """Called when any data comes."""
-        # print('event', event, flush=True)
+        print('event', event, flush=True)
         if event["type"] == "pulse":
             self.pulses += event["value"]
             # pass
