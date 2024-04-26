@@ -7,6 +7,7 @@ from Python.WaterRowerConnection import WaterRowerConnection
 
 class Example:
     def __init__(self):
+        self.all_events = []
         self.port = None
         self.connection = None
         self.pulses = 0
@@ -23,20 +24,23 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
         while self.connection:
-            self.npc_walk_position += round(1.3)
-            self.npc_run_position += round(1.3)
-            board_printer(self.npc_walk_position, self.npc_run_position)
+            self.connection.requestStatistic("watts")
+            if self.pulses > 0:
+                print(self.all_events)
+                speed_value = self.all_events[-1].get('value')
+                speed_value = 0 if speed_value is None else speed_value // 100
 
-            print("Do awesome stuff here! Total pulses:", self.pulses)
-            self.connection.requestStatistic("total_kcal")
+                self.npc_walk_position += speed_value
+            board_printer(self.npc_walk_position)
 
             # calc_calories(self.pulses)
-            # time.sleep(0.05)
             time.sleep(1)
 
     def onEvent(self, event):
         """Called when any data comes."""
-        print('event', event, flush=True)
+        if event["type"] != "pulse":
+            # print('event', event, flush=True)
+            self.all_events.append(dict(event))
         if event["type"] == "pulse":
             self.pulses += event["value"]
             # pass
