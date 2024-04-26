@@ -3,38 +3,28 @@ import random
 position = 0
 BOARD_END = 200
 
+def create_player(name: str, color: str, speed: int):
+    return f"""
+{" " * speed + color}{name}
+{" " * speed + color}/|\\
+{" " * speed + color}| |
+    """
 
 def board_printer(walk_speed: int):
     terminal = blessed.Terminal()
     print(terminal.home + terminal.normal + terminal.clear)
 
     player_extra_speed = random.randint(1, 2)
-    player = f"""
-{" " * (walk_speed + player_extra_speed) + terminal.red}You
-{" " * (walk_speed + player_extra_speed) + terminal.red}/|\\
-{" " * (walk_speed + player_extra_speed) + terminal.red}| |
-    """
+    player = create_player("You", terminal.red, walk_speed + player_extra_speed)
 
     bob_random = random.randint(-2, 1)
-    bob = f"""
-{" " * (walk_speed + bob_random) + terminal.blue}Bob
-{" " * (walk_speed + bob_random) + terminal.blue}/|\\
-{" " * (walk_speed + bob_random) + terminal.blue}/ /
-    """
+    bob = create_player("Bob", terminal.blue, walk_speed + bob_random)
 
     jan_random = random.randint(-2, 1)
-    jan = f"""
-{" " * (walk_speed + jan_random) + terminal.green}Jan
-{" " * (walk_speed + jan_random) + terminal.green}/|\\
-{" " * (walk_speed + jan_random) + terminal.green}/ /
-    """
+    jan = create_player("Jan", terminal.green, walk_speed + jan_random)
 
     kim_random = random.randint(-2, 1)
-    kim = f"""
-{" " * (walk_speed + kim_random) + terminal.yellow}Kim
-{" " * (walk_speed + kim_random) + terminal.yellow}/|\\
-{" " * (walk_speed + kim_random) + terminal.yellow}/ /
-    """
+    kim = create_player("Kim", terminal.yellow, walk_speed + kim_random)
 
     print(player)
     print(terminal.normal)

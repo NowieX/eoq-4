@@ -31,14 +31,14 @@ class Example:
         # This is where you run your main application. For instance, you could start a Flask app here,
         # run a GUI, do a full-screen blessed virtualization, or just about anything else.
 
-        # self.start_countdown()
+        self.start_countdown()
         while self.connection:
 
             self.connection.requestStatistic("watts")
             if self.pulses > 0:
                 print(self.all_events)
                 speed_value = self.all_events[-1].get('value')
-                speed_value = 0 if speed_value is None else speed_value // 5
+                speed_value = 0 if speed_value is None else speed_value // 10
 
                 self.player_run_speed += speed_value
             board_printer(self.player_run_speed)
